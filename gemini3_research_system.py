@@ -508,7 +508,16 @@ If issues found, provide corrected_review with fixed citations and claims. Other
             # Use corrected review if hallucinations found
             if validation_result.get('has_hallucinations', False) and validation_result.get('corrected_review'):
                 self.session.add_log(f"Hallucinations detected and corrected: {validation_result.get('issues_found', [])}")
-                result = validation_result.get('corrected_review', result)
+                corrected_review = validation_result.get('corrected_review')
+                # Parse the corrected review if it's a JSON string
+                if isinstance(corrected_review, str):
+                    try:
+                        result = json.loads(corrected_review)
+                    except json.JSONDecodeError:
+                        # If parsing fails, use the original result
+                        self.session.add_log(f"Failed to parse corrected review, using original")
+                else:
+                    result = corrected_review
             
         except Exception as e:
             self.session.add_log(f"Validation check error (proceeding with original): {str(e)}")

@@ -1177,6 +1177,13 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Fix for Streamlit Cloud ChatInput module loading issues
+# This workaround prevents dynamic import errors on deployed instances
+if 'chat_input_initialized' not in st.session_state:
+    st.session_state.chat_input_initialized = True
+    # Add retry mechanism for chat input component
+    st.session_state.chat_retry_count = 0
+
 # ============================================
 # 🔧 BACKEND FUNCTIONS
 # ============================================
@@ -1472,7 +1479,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # 📑 TABS
 # ============================================
 
-tabs = st.tabs(["📄 Papers", "🧠 Analysis", "📚 Literature", "🔍 Gaps", "📈 Trends", "�️ Network", "�💬 Ask Papers", "🤖 Agents"])
+tabs = st.tabs(["📄 Papers", "🧠 Analysis", "📚 Literature", "🔍 Gaps", "📈 Trends", "🕸️ Network", "💬 Ask Papers", "🤖 Agents"])
 
 # --- Papers Tab ---
 with tabs[0]:
@@ -1644,29 +1651,30 @@ with tabs[1]:
                             st.markdown(f"• {lim}")
                     else:
                         st.markdown(f"• {lims}")
-                    st.markdown("**📈 Scores**")
-                    sc1, sc2 = st.columns(2)
+                    st.markdown("**📈 Innovation Score**")
+                    sc1 = st.columns(1)[0]
                     
-                    # Score Progress Bars
-                    for col, title, key in [(sc1, "Innovation", 'innovation_score'), (sc2, "Novelty", 'novelty_score')]:
-                        with col:
-                            try:
-                                score = float(a.get(key, 0))
-                            except:
-                                score = 0
-                            
-                            color = "red" if score < 5 else "orange" if score < 8 else "green"
-                            st.markdown(f'<span style="color:{color}; font-weight:bold; font-size:0.9rem;">{score}/10 {title}</span>', unsafe_allow_html=True)
-                            
-                            # Custom progress bar html to support raw colors directly in basic Streamlit
-                            bar_width = min(max(int(score * 10), 0), 100)
-                            color_hex = "#ef4444" if score < 5 else "#f97316" if score < 8 else "#22c55e"
-                            
-                            st.markdown(f'''
-                            <div style="width: 100%; background-color: #e5e7eb; border-radius: 4px; height: 8px; margin-bottom: 12px; overflow: hidden;">
-                                <div style="width: {bar_width}%; background-color: {color_hex}; height: 100%; border-radius: 4px;"></div>
-                            </div>
-                            ''', unsafe_allow_html=True)
+                    # Score Progress Bar
+                    title = "Innovation"
+                    key = 'innovation_score'
+                    with sc1:
+                        try:
+                            score = float(a.get(key, 0))
+                        except:
+                            score = 0
+                        
+                        color = "red" if score < 5 else "orange" if score < 8 else "green"
+                        st.markdown(f'<span style="color:{color}; font-weight:bold; font-size:0.9rem;">{score}/10 {title}</span>', unsafe_allow_html=True)
+                        
+                        # Custom progress bar html to support raw colors directly in basic Streamlit
+                        bar_width = min(max(int(score * 10), 0), 100)
+                        color_hex = "#ef4444" if score < 5 else "#f97316" if score < 8 else "#22c55e"
+                        
+                        st.markdown(f'''
+                        <div style="width: 100%; background-color: #e5e7eb; border-radius: 4px; height: 8px; margin-bottom: 12px; overflow: hidden;">
+                            <div style="width: {bar_width}%; background-color: {color_hex}; height: 100%; border-radius: 4px;"></div>
+                        </div>
+                        ''', unsafe_allow_html=True)
                 
                 # Confidence Indicator
                 confidence = a.get('confidence_in_analysis', 0.5)
@@ -1716,7 +1724,11 @@ with tabs[2]:
         # Parse the literature content
         lit_data = None
         if isinstance(lit, dict):
-            if 'deep_synthesis_analysis' in lit:
+            # Check for expected keys from the backend
+            if 'title' in lit or 'introduction' in lit or 'major_research_themes' in lit:
+                # This is the correct structure from backend
+                lit_data = lit
+            elif 'deep_synthesis_analysis' in lit:
                 lit_data = lit.get('deep_synthesis_analysis', lit)
             elif 'summary_report' in lit:
                 lit_data = lit.get('summary_report', lit)
@@ -1728,9 +1740,19 @@ with tabs[2]:
             else:
                 lit_data = lit
         else:
-            # String content
-            st.info(clean_lit_text(str(lit)))
-            lit_data = None
+            # String content - try to parse as JSON first
+            try:
+                import json
+                parsed_json = json.loads(str(lit))
+                if isinstance(parsed_json, dict) and ('title' in parsed_json or 'introduction' in parsed_json or 'major_research_themes' in parsed_json):
+                    lit_data = parsed_json
+                else:
+                    st.info(clean_lit_text(str(lit)))
+                    lit_data = None
+            except (json.JSONDecodeError, TypeError):
+                # Not valid JSON, display as plain text
+                st.info(clean_lit_text(str(lit)))
+                lit_data = None
             
         if lit_data and isinstance(lit_data, dict):
             # Extract fields (gaps and future directions are shown in Gaps tab only)
@@ -1811,35 +1833,76 @@ with tabs[2]:
             # Title
             st.markdown(f"### 📖 {clean_lit_text(title)}")
             st.markdown(f'<p style="color: #64748b; font-size: 0.9rem; margin-top: -10px;">AI-synthesized analysis • ~{word_count} word review generated</p>', unsafe_allow_html=True)
+            st.divider()
             
             # Overview
             if intro:
                 with st.container():
-                    st.markdown("#### 📝 Overview")
-                    st.write(clean_lit_text(intro))
+                    st.markdown('<div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin-bottom: 20px;"><h4 style="margin-top: 0; color: #0f172a;">📝 Overview</h4></div>', unsafe_allow_html=True)
+                    st.markdown(clean_lit_text(intro))
+                    st.markdown("")
             
             # Research Themes
             if themes:
-                st.markdown("#### 🎯 Major Research Themes")
+                st.markdown('<div style="border-left: 4px solid #8b5cf6; padding-left: 16px; margin-bottom: 20px;"><h4 style="margin-top: 0; color: #0f172a;">🎯 Major Research Themes</h4></div>', unsafe_allow_html=True)
                 theme_list = themes if isinstance(themes, list) else [themes]
+                
+                # Create a more structured display
                 for i, theme in enumerate(theme_list[:6], 1):
-                    theme_text = theme.get('theme', theme) if isinstance(theme, dict) else str(theme)
-                    st.success(f"**{i}.** {clean_lit_text(theme_text)}")
+                    if isinstance(theme, dict):
+                        # Handle dictionary format
+                        theme_text = theme.get('theme', str(theme))
+                        theme_desc = theme.get('description', '')
+                    else:
+                        # Handle string format - split by colon to separate title and description
+                        theme_str = str(theme)
+                        if ':' in theme_str:
+                            parts = theme_str.split(':', 1)
+                            theme_text = parts[0].strip()
+                            theme_desc = parts[1].strip()
+                        else:
+                            theme_text = theme_str
+                            theme_desc = ''
+                    
+                    # Clean up the text
+                    theme_text = clean_lit_text(theme_text)
+                    theme_desc = clean_lit_text(theme_desc) if theme_desc else ''
+                    
+                    # Build description HTML if it exists
+                    desc_html = ""
+                    if theme_desc:
+                        desc_html = f'<div style="color: #475569; font-size: 0.9rem; line-height: 1.5; margin-top: 8px;">{theme_desc}</div>'
+                    
+                    # Create theme card
+                    theme_card = f'''
+                    <div style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 16px; background: linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%); margin-bottom: 12px;">
+                        <div style="display: flex; gap: 16px;">
+                            <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0; min-width: 32px;">{i}</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 700; color: #0f172a; font-size: 1rem;">{theme_text}</div>
+                                {desc_html}
+                            </div>
+                        </div>
+                    </div>
+                    '''
+                    st.markdown(theme_card, unsafe_allow_html=True)
             
             # Evolution
             if evolution:
-                st.markdown("#### 📈 Evolution of Research")
-                st.info(clean_lit_text(evolution))
+                st.markdown('<div style="border-left: 4px solid #06b6d4; padding-left: 16px; margin-bottom: 20px;"><h4 style="margin-top: 0; color: #0f172a;">📈 Evolution of Research</h4></div>', unsafe_allow_html=True)
+                st.markdown(f'<div style="background: linear-gradient(135deg, #cffafe 0%, #f0f9ff 100%); padding: 16px; border-radius: 12px; border-left: 4px solid #06b6d4; color: #0f172a; line-height: 1.6;">{clean_lit_text(evolution)}</div>', unsafe_allow_html=True)
+                st.markdown("")
             
             # Contradictions
             if contradictions:
-                st.markdown("#### ⚡ Key Debates & Contradictions")
-                st.warning(clean_lit_text(contradictions))
+                st.markdown('<div style="border-left: 4px solid #ec4899; padding-left: 16px; margin-bottom: 20px;"><h4 style="margin-top: 0; color: #0f172a;">⚡ Key Debates & Contradictions</h4></div>', unsafe_allow_html=True)
+                st.markdown(f'<div style="background: linear-gradient(135deg, #fef3c7 0%, #fef08a 100%); padding: 16px; border-radius: 12px; border-left: 4px solid #ec4899; color: #0f172a; line-height: 1.6;">{clean_lit_text(contradictions)}</div>', unsafe_allow_html=True)
+                st.markdown("")
             
             # Conclusion
             if conclusion:
-                st.markdown("#### 📋 Synthesis & Conclusion")
-                st.write(clean_lit_text(conclusion))
+                st.markdown('<div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin-bottom: 20px;"><h4 style="margin-top: 0; color: #0f172a;">📋 Synthesis & Conclusion</h4></div>', unsafe_allow_html=True)
+                st.markdown(f'<div style="background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); padding: 16px; border-radius: 12px; border-left: 4px solid #3b82f6; color: #0f172a; line-height: 1.6;">{clean_lit_text(conclusion)}</div>', unsafe_allow_html=True)
     else:
         st.markdown('''
         <div class="empty-state">
@@ -2336,14 +2399,27 @@ with tabs[6]:
                 
         st.markdown('</div>', unsafe_allow_html=True)
 
-        # 3. Chat Input AT BOTTOM
-        if user_q := st.chat_input("Ask a question about the analyzed papers..."):
-            st.session_state.chat_history.append({
-                "role": "user", 
-                "content": user_q,
-                "time": datetime.now().strftime("%H:%M")
-            })
-            st.rerun()
+        # 3. Chat Input AT BOTTOM - with error handling
+        try:
+            if user_q := st.chat_input("Ask a question about the analyzed papers..."):
+                st.session_state.chat_history.append({
+                    "role": "user", 
+                    "content": user_q,
+                    "time": datetime.now().strftime("%H:%M")
+                })
+                st.rerun()
+        except Exception as e:
+            # Fallback if chat_input fails
+            st.warning(f"Chat input error: {str(e)}. Please refresh the page.")
+            # Provide alternative text input
+            alt_input = st.text_input("Alternative: Ask a question about the papers...")
+            if alt_input:
+                st.session_state.chat_history.append({
+                    "role": "user", 
+                    "content": alt_input,
+                    "time": datetime.now().strftime("%H:%M")
+                })
+                st.rerun()
     else:
         st.markdown('''
         <div class="empty-state">

@@ -1,30 +1,40 @@
 # 🧠 AI Research Intelligence System
 
-> **Multi-Agent Academic Discovery Platform** powered by OpenRouter AI
+> **Multi-Agent Academic Discovery Platform** powered by Google Gemini AI
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
-![OpenRouter](https://img.shields.io/badge/OpenRouter-API-green?logo=openai)
+![Gemini](https://img.shields.io/badge/Gemini-API-blue?logo=google)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red?logo=streamlit)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## 🔬 Overview
 
-A sophisticated **Multi-Agent AI Research System** that leverages **OpenRouter AI** (with Groq/DeepSeek models) to autonomously discover, analyze, and synthesize academic research from arXiv.
+A sophisticated **Multi-Agent AI Research System** that leverages **Google Gemini AI** to autonomously discover, analyze, and synthesize academic research from arXiv.
 
 ### ✨ Key Features
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **4 Specialized Agents** | DeepAnalyzer, Synthesizer, Critic, and TrendPrediction agents |
-| 📚 **arXiv Integration** | Access to millions of research papers |
-| 🧠 **Deep Analysis** | AI-powered research analysis using OpenRouter API |
-| 🎨 **Modern UI** | Clean, professional interface with responsive design |
-| 📊 **Smart Relevance Scoring** | AI-powered paper filtering and ranking |
-| 🔄 **Real-time Progress** | Live agent status and search progress tracking |
+| 🤖 **Multi-Agent System** | 6 specialized AI agents for comprehensive research analysis |
+| 📚 **arXiv Integration** | Direct access to millions of academic research papers |
+| 🧠 **Deep AI Analysis** | Advanced paper analysis using Google Gemini AI models |
+| 📊 **Smart Relevance Scoring** | AI-powered paper filtering and ranking system |
+| 🎨 **Modern UI/UX** | Professional Streamlit interface with responsive design |
+| � **Real-time Progress** | Live agent status tracking and search progress |
+| 📈 **Trend Prediction** | AI-driven research trend forecasting |
+| 🔍 **Gap Analysis** | Automated identification of research gaps |
+| 🕸️ **Network Graphs** | Interactive concept relationship visualization |
+| � **AI Chat Interface** | Natural language interaction with research papers |
+| 📄 **PDF Export** | Export literature reviews and analysis to PDF |
+| 🎯 **Innovation Scoring** | Automated assessment of paper novelty and innovation |
+| 📋 **Literature Synthesis** | AI-generated comprehensive literature reviews |
+| 🔐 **API Integration** | Google Gemini AI integration for powerful analysis |
+| 📱 **Responsive Design** | Works seamlessly on desktop, tablet, and mobile |
+| 🎯 **Search Optimization** | Advanced filtering and search capabilities |
 
 ---
 
-## � Meet the Team
+## 🧠 Meet the Team
 
 <table>
   <tr>
@@ -33,43 +43,43 @@ A sophisticated **Multi-Agent AI Research System** that leverages **OpenRouter A
     <th align="center">📋 Contributions</th>
   </tr>
   <tr>
-    <td align="center"><b>Muhammad Saad Umar</b></td>
-    <td align="center">💡 Project Ideator & AI Engineer</td>
+    <td align="center"><b>Hasseb</b></td>
+    <td align="center">�‍💼 Project Manager</td>
     <td>
-      • Conceived the original project concept<br>
-      • Designed & implemented multi-agent AI architecture<br>
-      • Integrated OpenRouter API & AI models<br>
-      • Developed intelligent research analysis algorithms
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><b>Umme Rubab</b></td>
-    <td align="center">🎨 UI/Frontend Developer & Presenter</td>
-    <td>
-      • Designed modern Streamlit user interface<br>
-      • Created responsive layouts & visual components<br>
-      • Implemented real-time progress indicators<br>
-      • Prepared project presentation & demos
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><b>Muhammad Fiaz</b></td>
-    <td align="center">📐 System Designer & Documentation Lead</td>
-    <td>
-      • Architected system design & data flow<br>
-      • Created comprehensive technical documentation<br>
-      • Designed multi-agent orchestration patterns<br>
-      • Authored README, SETUP & user guides
+      • Led project planning and coordination<br>
+      • Managed team resources and timelines<br>
+      • Oversaw project delivery and quality assurance<br>
+      • Coordinated stakeholder communication
     </td>
   </tr>
   <tr>
     <td align="center"><b>Abdul Rehman</b></td>
-    <td align="center">⚙️ Backend Developer & QA Engineer</td>
+    <td align="center">⚙️ Full Stack Developer</td>
     <td>
-      • Developed backend research orchestrator<br>
-      • Implemented arXiv API integration<br>
-      • Conducted end-to-end testing & debugging<br>
-      • Ensured code quality & system reliability
+      • Developed complete backend architecture<br>
+      • Implemented multi-agent research orchestrator<br>
+      • Created modern Streamlit user interface<br>
+      • Integrated arXiv API and AI services
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><b>Hussnain Dawood</b></td>
+    <td align="center">🎥 Demo Video</td>
+    <td>
+      • Created comprehensive demo videos<br>
+      • Produced tutorial and walkthrough content<br>
+      • Designed visual presentations<br>
+      • Managed video production and editing
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><b>Sehreen Atta Gul</b></td>
+    <td align="center">📚 Documentation</td>
+    <td>
+      • Authored comprehensive technical documentation<br>
+      • Created user guides and API documentation<br>
+      • Maintained project README and setup guides<br>
+      • Documented system architecture and features
     </td>
   </tr>
 </table>
@@ -81,8 +91,7 @@ A sophisticated **Multi-Agent AI Research System** that leverages **OpenRouter A
 ### Prerequisites
 
 - Python 3.10+
-- OpenRouter API Key ([Get one here](https://openrouter.ai/keys))
-- Or Groq API Key ([Get one here](https://console.groq.com/))
+- Google Gemini API Key ([Get one here](https://makersuite.google.com/app/apikey))
 
 ### Installation
 
@@ -109,11 +118,8 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 
 ```env
-# Use OpenRouter (recommended)
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-
-# Or use Groq (alternative)
-# GROQ_API_KEY=your_groq_api_key_here
+# Google Gemini API Key
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ### Run the Application
@@ -131,7 +137,15 @@ Open your browser at `http://localhost:8501`
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    STREAMLIT UI (app.py)                    │
-│              Modern Theme • Real-time Updates               │
+│         Modern Theme • Real-time Updates • Responsive       │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────┐ │
+│  │   Papers    │ │  Analysis   │ │ Literature  │ │  Gaps   │ │
+│  │    Tab      │ │    Tab      │ │    Tab      │ │   Tab   │ │
+│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────┘ │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────┐ │
+│  │   Trends    │ │   Network   │ │   Chat      │ │ Agents  │ │
+│  │    Tab      │ │    Tab      │ │    Tab      │ │   Tab   │ │
+│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────┘ │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -144,22 +158,27 @@ Open your browser at `http://localhost:8501`
 │  │    Agent     │ │    Agent     │ │    Agent     │         │
 │  └──────┬───────┘ └──────┬───────┘ └──────┬───────┘         │
 │         │                │                │                  │
-│  ┌──────┴────────────────┴────────────────┴───────┐         │
-│  │         TrendPrediction Agent                  │         │
-│  └────────────────────────────────────────────────┘         │
+│  ┌──────┴───────┐ ┌──────┴───────┐ ┌──────┴───────┐         │
+│  │TrendPrediction│ │NetworkGraph  │ │PaperChat     │         │
+│  │    Agent      │ │    Agent      │ │    Agent      │         │
+│  └───────────────┘ └──────────────┘ └───────────────┘         │
 │                          │                                   │
 │  ┌───────────────────────┴────────────────────────┐         │
-│  │              OPENROUTER AI API                 │         │
+│  │              GOOGLE GEMINI AI API              │         │
 │  │              Deep Analysis Engine               │         │
 │  └─────────────────────────────────────────────────┘         │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                      DATA SOURCE                            │
+│                      DATA SOURCES                           │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │                      arXiv                           │   │
 │  │          Open Access Academic Papers                 │   │
+│  └──────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │                    PDF Export                       │   │
+│  │          Literature Review Generation              │   │
 │  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -188,28 +207,40 @@ project/
 ## 🤖 Agent Descriptions
 
 ### 1. 🧠 DeepAnalyzer Agent
-Analyzes individual papers deeply using OpenRouter AI for methodology evaluation, contribution assessment, and limitation identification.
+Performs comprehensive analysis of individual research papers using Google Gemini AI for methodology evaluation, contribution assessment, innovation scoring, and limitation identification.
 
-### 2. 📚 Synthesizer Agent
-Generates comprehensive literature reviews by synthesizing findings across all collected papers.
+### 2. 📚 SynthesisAgent
+Generates comprehensive literature reviews by synthesizing findings across all collected papers using Google Gemini AI with self-correction capabilities for hallucination detection.
 
-### 3. 🔍 Critic Agent
-Identifies research gaps, unexplored areas, and potential future research directions.
+### 3. 🔍 CriticAgent
+Identifies research gaps, unexplored areas, contradictions in findings, and potential future research directions using Google Gemini AI's critical analysis capabilities.
 
-### 4. 📈 TrendPrediction Agent
-Predicts emerging research trends and provides forecasts based on analyzed papers.
+### 4. 📈 TrendPredictionAgent
+Predicts emerging research trends, forecasts future developments, and identifies promising research directions using Google Gemini AI-driven analysis.
+
+### 5. 🕸️ NetworkGraphAgent
+Creates interactive concept relationship visualizations, builds knowledge graphs showing paper connections, and identifies key research clusters using Google Gemini AI.
+
+### 6. 💬 PaperChatAgent
+Enables natural language interaction with research papers, answers questions about analyzed content, and provides intelligent paper discussions powered by Google Gemini AI.
 
 ---
 
 ## 🎨 UI Features
 
-- **Modern Professional Theme** - Clean design with blue/purple gradients
-- **Responsive Layout** - Works on various screen sizes
-- **Real-time Agent Status** - Live tracking of agent activity
-- **Paper Cards** - Beautiful cards with relevance scores and metadata
-- **Tab Navigation** - Papers, Analysis, Literature, Gaps, Trends, Agents
-- **Input Validation** - Minimum 3 character query validation
-- **Tooltips** - Helpful tooltips on all interactive elements
+- **Modern Professional Theme** - Clean design with blue/purple gradients and animations
+- **Fully Responsive Layout** - Works seamlessly on desktop, tablet, and mobile devices
+- **Real-time Agent Status** - Live tracking of all 6 agent activities with progress indicators
+- **Interactive Paper Cards** - Beautiful cards with relevance scores, innovation metrics, and metadata
+- **8-Tab Navigation** - Papers, Analysis, Literature, Gaps, Trends, Network, Chat, Agents
+- **Smart Input Validation** - Minimum 3 character query validation with helpful error messages
+- **Advanced Search & Filter** - Real-time paper filtering with multiple sort options
+- **PDF Export Functionality** - Export literature reviews and analysis to PDF format
+- **Interactive Network Graphs** - Visualize concept relationships and research clusters
+- **AI Chat Interface** - Natural language conversation with analyzed papers
+- **Progress Tracking** - Visual progress bars and novelty status indicators
+- **Consistent Card Sizing** - Uniform layout across all UI components
+- **Dark/Light Theme Support** - Professional color schemes for comfortable viewing
 
 ---
 
@@ -236,6 +267,8 @@ In the sidebar, you can configure:
    - 📚 **Literature** - Synthesized literature review
    - 🔍 **Gaps** - Identified research gaps
    - 📈 **Trends** - Predicted future trends
+   - 🕸️ **Network** - Interactive concept relationship graphs
+   - 💬 **Chat** - AI-powered paper discussion interface
    - 🤖 **Agents** - Agent activity status
 
 ---
@@ -272,8 +305,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## 🙏 Acknowledgments
 
-- **OpenRouter** - For the AI API gateway
-- **Groq** - For fast LLM inference
+- **Google Gemini** - For the powerful AI API and language models
 - **Streamlit** - For the rapid UI development framework
 - **arXiv** - For providing open access to research papers
 
@@ -281,22 +313,24 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## Team Members
 
-- **Project Manager:** Muhammad Fiaz
+- **Project Manager:** Hasseb
 - **Full Stack Developer:** Abdul Rehman
-- **AI / ML Engineer:** Muhammad Umar Saad
-- **Pitch / Demo Lead:** Ume Rubab
+- **ML/Demo Video:** Hussnain Dawood
+- **Documentation/ppt:** Sehreen Atta Gul
 
 
 <div align="center">
 
-### 🌟 Developed with Passion by Team MARIS 🌟
+### 🌟 Developed with Passion by the Research Intelligence Team 🌟
 
-**Muhammad Saad Umar** • **Umme Rubab** • **Muhammad Fiaz** • **Abdul Rehman**
+**Hasseb** • **Abdul Rehman** • **Hussnain Dawood** • **Sehreen Atta Gul**
 
 ---
 
-**Built with ❤️ for Research Discovery**
+**Built with ❤️ for Advanced Research Discovery**
 
-🔬 *AI-powered academic research made simple*
+🔬 *Multi-Agent AI-powered academic research made simple*
+
+📚 *Transforming how researchers discover, analyze, and synthesize academic literature*
 
 </div>
