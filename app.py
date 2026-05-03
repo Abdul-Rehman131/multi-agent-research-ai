@@ -1317,7 +1317,7 @@ with st.sidebar:
     st.session_state.auto_build_network = auto_build_network
     
     st.markdown("<div style='margin-top: 12px; margin-bottom: 8px;'></div>", unsafe_allow_html=True)
-    start_btn = st.button("⚡ LAUNCH RESEARCH", width='stretch', type="primary")
+    start_btn = st.button("⚡ LAUNCH RESEARCH", use_container_width=True, type="primary")
     
     if st.session_state.papers:
         st.markdown("---")
