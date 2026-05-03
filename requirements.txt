@@ -13,7 +13,7 @@ feedparser>=6.0.10            # RSS/Atom feed parsing (arXiv)
 urllib3>=2.0.0                # URL handling
 
 # --- Web Interface ---
-streamlit==1.32.2             # Web UI framework (stable version for Streamlit Cloud)
+streamlit>=1.35.0             # Web UI framework (stable version for Streamlit Cloud)
 networkx>=3.1                 # Graph generation & analysis
 plotly>=5.18.0                # Data Visualization & Interactive charts
 
